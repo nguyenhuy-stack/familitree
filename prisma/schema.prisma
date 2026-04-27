@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Member {
+  id        String   @id @default(uuid())
+  name      String
+  role      String
+  birthDate String?
+  avatar    String?
+  parentId  String?
+  spouseId  String?
+  gender    String
+  createdAt DateTime @default(now())
+}

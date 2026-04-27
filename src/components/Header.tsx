@@ -1,10 +1,11 @@
 import { Link } from '@tanstack/react-router'
 import ThemeToggle from './ThemeToggle'
+import { GlobalSearch } from './GlobalSearch'
 
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--header-bg)] px-4 backdrop-blur-lg">
-      <nav className="page-wrap flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4">
+      <nav className="page-wrap flex items-center gap-x-4 py-3">
         <h2 className="m-0 flex-shrink-0 text-base font-semibold tracking-tight">
           <Link
             to="/"
@@ -15,32 +16,33 @@ export default function Header() {
           </Link>
         </h2>
 
-        <div className="ml-auto flex items-center gap-1.5 sm:ml-0 sm:gap-2">
-          <ThemeToggle />
-        </div>
+        <GlobalSearch />
 
-        <div className="order-3 flex w-full flex-wrap items-center gap-x-4 gap-y-1 pb-1 text-sm font-semibold sm:order-2 sm:w-auto sm:flex-nowrap sm:pb-0">
-          <Link
-            to="/"
-            className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
-          >
-            Trang Chủ
-          </Link>
-          <Link
-            to="/members"
-            className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
-          >
-            Danh Sách
-          </Link>
-          <Link
-            to="/about"
-            className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
-          >
-            Giới Thiệu
-          </Link>
+        <div className="ml-auto flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-6 text-sm font-semibold">
+            <Link
+              to="/"
+              className="nav-link"
+              activeProps={{ className: 'nav-link is-active' }}
+            >
+              Trang Chủ
+            </Link>
+            <Link
+              to="/members"
+              className="nav-link"
+              activeProps={{ className: 'nav-link is-active' }}
+            >
+              Danh Sách
+            </Link>
+            <Link
+              to="/about"
+              className="nav-link"
+              activeProps={{ className: 'nav-link is-active' }}
+            >
+              Giới Thiệu
+            </Link>
+          </div>
+          <ThemeToggle />
         </div>
       </nav>
     </header>

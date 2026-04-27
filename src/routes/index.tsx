@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Maximize2, Minimize2, RefreshCcw, Search, X, Users } from 'lucide-react'
+import { Plus, Maximize2, Minimize2, RefreshCcw, Users } from 'lucide-react'
 import { MemberForm } from '../components/MemberForm'
 import { FamilyBranch } from '../components/FamilyBranch'
 import { MemberDetailPanel } from '../components/MemberDetailPanel'
@@ -31,8 +31,7 @@ function FamilyTreePage() {
   const [formParent, setFormParent] = useState<any>(null)
   const [selectedMember, setSelectedMember] = useState<any | null>(null)
   const [focusId, setFocusId] = useState<string | null>(searchFocusId || null)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [isSearching, setIsSearching] = useState(false)
+
 
   const { data: members, refetch } = useSuspenseQuery({
     queryKey: ['members'],
@@ -80,12 +79,7 @@ function FamilyTreePage() {
     return roots
   }, [members, focusId])
 
-  const searchResults = useMemo(() => {
-    if (!searchTerm.trim()) return []
-    return members.filter((m: any) =>
-      m.name.toLowerCase().includes(searchTerm.toLowerCase())
-    ).slice(0, 5)
-  }, [members, searchTerm])
+
 
   const openForm = (mode: FormMode, member?: any) => {
     setFormMode(mode)
@@ -143,75 +137,6 @@ function FamilyTreePage() {
 
       <div className="absolute left-6 top-6 z-10 px-3 py-1.5 rounded-lg bg-[var(--surface-strong)] border border-[var(--line)] text-xs font-mono text-[var(--sea-ink-soft)]">
         {Math.round(zoom.view.scale * 100)}%
-      </div>
-
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-4 w-full max-w-xs sm:max-w-md">
-        <div className="relative w-full">
-          <div className={`flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-[var(--surface-strong)] border border-[var(--line)] shadow-xl transition-all duration-300 ${isSearching ? 'ring-2 ring-[var(--lagoon)]' : ''}`}>
-            <Search size={18} className="text-[var(--sea-ink-soft)]" />
-            <input
-              type="text"
-              placeholder="Tìm kiếm thành viên..."
-              className="bg-transparent border-none outline-none text-sm w-full text-[var(--sea-ink)]"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onFocus={() => setIsSearching(true)}
-              onBlur={() => setTimeout(() => setIsSearching(false), 200)}
-            />
-            {searchTerm && (
-              <button onClick={() => setSearchTerm('')} className="p-1 rounded-full hover:bg-[var(--line)] cursor-pointer">
-                <X size={14} />
-              </button>
-            )}
-          </div>
-
-          {/* Search Results Dropdown */}
-          <AnimatePresence>
-            {isSearching && searchResults.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="absolute top-full left-0 right-0 mt-3 p-2 rounded-3xl bg-[var(--surface-strong)] border border-[var(--line)] shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-50 overflow-hidden backdrop-blur-xl"
-              >
-                <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-[var(--sea-ink-soft)] opacity-60">Kết quả tìm kiếm</div>
-                {searchResults.map((m: any) => (
-                  <button
-                    key={m.id}
-                    onClick={() => {
-                      setSelectedMember(m)
-                      setSearchTerm('')
-                      setIsSearching(false)
-                    }}
-                    className="flex items-center gap-3 w-full p-3 rounded-xl hover:bg-[var(--lagoon)]/5 transition text-left cursor-pointer"
-                  >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${m.gender === 'male' ? 'bg-blue-100 text-blue-600' : 'bg-rose-100 text-rose-600'}`}>
-                      {m.name.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-[var(--sea-ink)]">{m.name}</p>
-                      <p className="text-[10px] text-[var(--sea-ink-soft)] uppercase">{m.role}</p>
-                    </div>
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        <div className="px-4 py-2 rounded-xl bg-[var(--surface-strong)]/80 backdrop-blur-md border border-[var(--line)] text-[10px] sm:text-xs text-[var(--sea-ink-soft)] shadow-sm flex items-center gap-2">
-          💡 {focusId ? (
-            <>
-              Đang xem cây của <b>{members.find((m: any) => m.id === focusId)?.name}</b>
-              <button 
-                onClick={() => setFocusId(null)}
-                className="ml-2 px-2 py-0.5 rounded-md bg-[var(--lagoon)] text-white font-bold hover:opacity-90 transition cursor-pointer"
-              >
-                Xem toàn bộ
-              </button>
-            </>
-          ) : 'Di chuột vào thành viên để thêm con hoặc ghép đôi'}
-        </div>
       </div>
 
       {/* Canvas */}

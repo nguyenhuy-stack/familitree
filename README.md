@@ -1,193 +1,74 @@
-Welcome to your new TanStack Start app! 
+# 🌳 Family Tree - Ứng Dụng Cây Phả Hệ Hiện Đại
 
-# Getting Started
+Ứng dụng quản lý và hiển thị cây phả hệ gia đình được xây dựng với các công nghệ web tiên tiến nhất, mang lại trải nghiệm mượt mà, trực quan và chuyên nghiệp.
 
-To run this application:
+![Family Tree Preview](https://raw.githubusercontent.com/TienThinh/family-tree/main/public/preview.png) *(Lưu ý: Cập nhật link ảnh thực tế nếu có)*
 
+## ✨ Tính năng nổi bật
+
+- **Cây Phả Hệ Tương Tác**: Hiển thị cấu trúc gia đình phân cấp, hỗ trợ đệ quy đa thế hệ.
+- **Phóng to/Thu nhỏ (Zoom & Pan)**: Dễ dàng điều hướng trong những cây phả hệ lớn với tính năng kéo thả và zoom mượt mà.
+- **Tìm Kiếm Thông Minh**: Tìm kiếm thành viên nhanh chóng theo tên hoặc vai trò.
+- **Quản Lý Thành Viên**: Thêm, sửa thông tin thành viên (tên, ngày sinh, vai trò, avatar, mối quan hệ vợ/chồng).
+- **Giao Diện Premium**: Thiết kế hiện đại với Tailwind CSS 4, hỗ trợ hiệu ứng chuyển cảnh Fluid Animations từ Framer Motion.
+- **Hiệu Năng Cao**: Xây dựng trên TanStack Start (React 19) giúp tối ưu hóa tốc độ tải và SEO.
+
+## 🛠️ Công nghệ sử dụng
+
+- **Frontend**: [React 19](https://react.dev/), [TanStack Start](https://tanstack.com/start) (Full-stack framework).
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/) (Animations).
+- **Database**: [Prisma](https://www.prisma.io/) với [SQLite](https://sqlite.org/).
+- **Quản lý trạng thái & Routing**: [TanStack Router](https://tanstack.com/router) & [TanStack Query](https://tanstack.com/query).
+- **Icons**: [Lucide React](https://lucide.dev/).
+- **Tiện ích**: `react-zoom-pan-pinch`, `react-hot-toast`.
+
+## 🚀 Hướng dẫn cài đặt
+
+### 1. Clone project
+```bash
+git clone <your-repo-url>
+cd family-tree
+```
+
+### 2. Cài đặt dependencies
 ```bash
 npm install
+```
+
+### 3. Thiết lập Database
+Ứng dụng sử dụng SQLite để lưu trữ dữ liệu cục bộ. Chạy các lệnh sau để khởi tạo database:
+```bash
+# Khởi tạo schema prisma
+npx prisma generate
+npx prisma db push
+
+# (Tùy chọn) Chạy seed dữ liệu nếu có
+# npx prisma db seed
+```
+
+### 4. Chạy môi trường Development
+```bash
 npm run dev
 ```
+Mở [http://localhost:3000](http://localhost:3000) trên trình duyệt để xem kết quả.
 
-# Building For Production
+## 📁 Cấu trúc thư mục
 
-To build this application for production:
+- `src/components/`: Chứa các component dùng chung (Header, GlobalSearch, Tree nodes...).
+- `src/routes/`: Quản lý các trang và API endpoints sử dụng TanStack File-based Routing.
+- `prisma/`: Định nghĩa schema database và các file migration.
+- `public/`: Chứa các tài sản tĩnh như ảnh, favicon.
 
-```bash
-npm run build
-```
+## 📝 Scripts chính
 
-## Testing
+- `npm run dev`: Chạy server phát triển.
+- `npm run build`: Xây dựng ứng dụng cho môi trường production.
+- `npm run test`: Chạy bộ kiểm thử Vitest.
+- `npx prisma studio`: Mở giao diện quản lý dữ liệu Prisma trực quan.
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+## 🤝 Đóng góp
 
-```bash
-npm run test
-```
+Mọi đóng góp nhằm cải thiện ứng dụng đều được trân trọng. Vui lòng tạo Issue hoặc Pull Request nếu bạn có ý tưởng mới.
 
-## Styling
-
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `npm install @tailwindcss/vite tailwindcss -D`
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+---
+Được xây dựng với ❤️ bởi **nguyenhuy**.
